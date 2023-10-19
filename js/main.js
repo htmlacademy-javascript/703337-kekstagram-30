@@ -40,22 +40,21 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-function defineTypeArray (elem) {
+function isString (elem) {
   return typeof elem === 'string';
 }
 
 const generateRandomArrayElement = (arr) => {
-  let array = arr.slice();
-  if(array.every(defineTypeArray)){
-    array = NAMES.slice();
+  if(arr.every(isString)){
+    arr = [...NAMES];
   } else {
-    array = NUMBERS_ID.slice();
+    arr = NUMBERS_ID.slice();
   }
 
   return function (){
-    const randomElement = array[getRandomInteger(0, array.length - 1)];
-    const index = array.indexOf(randomElement);
-    array.splice(index, 1);
+    const randomElement = arr[getRandomInteger(0, arr.length - 1)];
+    const index = arr.indexOf(randomElement);
+    arr.splice(index, 1);
     return randomElement;
   };
 };
@@ -72,16 +71,17 @@ function createComment(){
   };
 }
 
-function generateObj(){
-  function createObj (){
-    return {
-      id: getRandomArrayElement(),
-      url: `photos/${getRandomPhoto()}.jpg`,
-      description: 'Фото как фото',
-      likes: getRandomInteger(15, 200),
-      comments: Array.from({length: getRandomInteger(0, 30)}, createComment),
-    };
-  }
-  return Array.from({length: OBJ_COUNT}, createObj);
+function createObj (){
+  return {
+    id: getRandomArrayElement(),
+    url: `photos/${getRandomPhoto()}.jpg`,
+    description: 'Фото как фото',
+    likes: getRandomInteger(15, 200),
+    comments: Array.from({length: getRandomInteger(0, 30)}, createComment),
+  };
+}
+
+function generateObj(length){
+  return Array.from({length: length}, createObj);
 }
 
