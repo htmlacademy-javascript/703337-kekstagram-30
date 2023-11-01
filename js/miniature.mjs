@@ -4,6 +4,7 @@ const picturesList = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
+
 const miniaturesFragment = document.createDocumentFragment();
 
 function generatePictures(arr){
@@ -17,6 +18,7 @@ function generatePictures(arr){
   });
   picturesList.appendChild(miniaturesFragment);
 }
+
 generatePictures (blockMiniatures);
 
 export {generatePictures, blockMiniatures, picturesList};

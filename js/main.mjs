@@ -1,3 +1,4 @@
+
 import {picturesList} from './miniature.mjs';
 import {closePictureModal, openPictureModal} from './picture-modal.mjs';
 import{bigPicture} from './full-picture.mjs';
