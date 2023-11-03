@@ -1,10 +1,9 @@
 import {generateObj} from './data.mjs';
+const blockMiniatures = generateObj(25);
+const picturesList = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
-
-const picturesList = document.querySelector('.pictures');
-
 
 const miniaturesFragment = document.createDocumentFragment();
 
@@ -20,4 +19,7 @@ function generatePictures(arr){
   picturesList.appendChild(miniaturesFragment);
 }
 
-export {generatePictures};
+generatePictures (blockMiniatures);
+
+export {generatePictures, blockMiniatures, picturesList};
+

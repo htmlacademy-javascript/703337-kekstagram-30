@@ -1,6 +1,11 @@
-import {generateObj} from './data.mjs';
-import {generatePictures} from './miniature.mjs';
-const blockMiniatures = generateObj(2);
 
-console.log(generatePictures (blockMiniatures));
+import {picturesList} from './miniature.mjs';
+import {closePictureModal, openPictureModal} from './picture-modal.mjs';
+import{bigPicture} from './full-picture.mjs';
+const userModalClosePicture = bigPicture.querySelector('.big-picture__cancel');
 
+picturesList.addEventListener('click', (evt)=>{
+  openPictureModal(evt);
+});
+
+userModalClosePicture.addEventListener('click', closePictureModal);

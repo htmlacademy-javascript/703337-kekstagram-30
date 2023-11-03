@@ -37,4 +37,6 @@ function createComment(){
   };
 }
 
-export {getRandomInteger, generateRandomArrayElement, createComment};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {getRandomInteger, generateRandomArrayElement, createComment, isEscapeKey};
