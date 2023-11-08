@@ -1,5 +1,5 @@
-import {NUMBERS_ID} from './const.mjs';
-import {getRandomInteger, generateRandomArrayElement, createComment} from './util.mjs';
+import {NUMBERS_ID} from './const.js';
+import {getRandomInteger, generateRandomArrayElement, createComment} from './util.js';
 
 const getRandomArrayElement = generateRandomArrayElement(NUMBERS_ID);
 const getRandomPhoto = generateRandomArrayElement(NUMBERS_ID);
