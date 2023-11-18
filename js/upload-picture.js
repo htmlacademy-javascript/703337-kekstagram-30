@@ -1,6 +1,7 @@
 import {isEscapeKey} from './util.js';
 import {formValidate} from './hashtag-commit-valid.js';
-import {photoEditing, buttonBiggerDisabled} from './edit-picture.js';
+import {editingPhoto, changeButtonBiggerDisabled} from './edit-picture.js';
+import {initEffects, resettingSlider} from'./slider-edit-photo.js';
 import './slider-edit-photo.js';
 
 const body = document.querySelector('body');
@@ -41,8 +42,11 @@ uploadPhoto.addEventListener('change', ()=>{
 function openPictureOverlay (){
   pictureOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  buttonBiggerDisabled();
-  photoEditing();
+  //console.log(listItems[0])
+  changeButtonBiggerDisabled();
+  editingPhoto();
+  initEffects();
+  //createSlider();
   formValidate();
   closeButtonPictureOverlay.addEventListener('click', closePictureOverlay);
   hashtagField.addEventListener('keydown', onHashtagKeydown);
@@ -61,6 +65,8 @@ function closePictureOverlay () {
   scaleBigger.disabled = false;
   hashtagField.closest('.img-upload__field-wrapper').classList.remove('img-upload__field-wrapper--error');
   commentField.closest('.img-upload__field-wrapper').classList.remove('img-upload__field-wrapper--error');
+  resettingSlider();
+
   hashtagField.removeEventListener('keydown', onHashtagKeydown);
   commentField.removeEventListener('keydown', onCommentKeydown);
   document.removeEventListener('keydown', onDocumentKeydown);

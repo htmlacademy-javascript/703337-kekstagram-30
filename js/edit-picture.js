@@ -10,14 +10,14 @@ const effectLevel = form.querySelector('.img-upload__effect-level');
 const editPicture = imgUploadPreview.getElementsByTagName('img');
 const STEP = 25;
 
-function buttonSmallerDisabled (){
+function changeButtonSmallerDisabled (){
   if(scaleValue.value === '25%'){
     scaleSmaller.disabled = true;
   } else{
     scaleSmaller.disabled = false;
   }
 }
-function buttonBiggerDisabled(){
+function changeButtonBiggerDisabled(){
   if(scaleValue.value === '100%'){
     scaleBigger.disabled = true;
   } else{
@@ -28,17 +28,17 @@ function makePictureSmaller (){
   scaleValue.value = `${parseInt(scaleValue.value, 10) - STEP}%`;
   scaleBigger.disabled = false;
   editPicture[0].style.transform = `scale(${parseInt(scaleValue.value, 10) / 100})`;
-  buttonSmallerDisabled();
+  changeButtonSmallerDisabled();
 }
 
 function makePictureBigger (){
   scaleValue.value = `${parseInt(scaleValue.value, 10) + STEP}%`;
   scaleSmaller.disabled = false;
   editPicture[0].style.transform = `scale(${parseInt(scaleValue.value, 10) / 100})`;
-  buttonBiggerDisabled();
+  changeButtonBiggerDisabled();
 }
 
-function photoEditing (){
+function editingPhoto (){
   if(listItems[0].querySelector('input').checked){
     effectLevel.classList.add('visually-hidden');
   }
@@ -46,4 +46,4 @@ function photoEditing (){
   scaleBigger.addEventListener('click', makePictureBigger);
 }
 
-export {photoEditing, buttonSmallerDisabled, buttonBiggerDisabled};
+export {editingPhoto, changeButtonBiggerDisabled, changeButtonSmallerDisabled};
