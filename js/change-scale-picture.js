@@ -38,7 +38,7 @@ function makePictureBigger (){
   changeButtonBiggerDisabled();
 }
 
-function editingPhoto (){
+function changeScalePhoto (){
   if(listItems[0].querySelector('input').checked){
     effectLevel.classList.add('visually-hidden');
   }
@@ -46,4 +46,4 @@ function editingPhoto (){
   scaleBigger.addEventListener('click', makePictureBigger);
 }
 
-export {editingPhoto, changeButtonBiggerDisabled, changeButtonSmallerDisabled};
+export {changeScalePhoto, changeButtonBiggerDisabled, changeButtonSmallerDisabled};

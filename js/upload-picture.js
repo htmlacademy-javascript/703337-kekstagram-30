@@ -1,6 +1,6 @@
 import {isEscapeKey} from './util.js';
 import {formValidate} from './hashtag-commit-valid.js';
-import {editingPhoto, changeButtonBiggerDisabled} from './edit-picture.js';
+import {changeScalePhoto, changeButtonBiggerDisabled} from './change-scale-picture.js';
 import {initEffects, resettingSlider} from'./slider-edit-photo.js';
 import './slider-edit-photo.js';
 
@@ -42,9 +42,8 @@ uploadPhoto.addEventListener('change', ()=>{
 function openPictureOverlay (){
   pictureOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  //console.log(listItems[0])
   changeButtonBiggerDisabled();
-  editingPhoto();
+  changeScalePhoto();
   initEffects();
   //createSlider();
   formValidate();

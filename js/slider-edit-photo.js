@@ -13,8 +13,9 @@ const typesOfEffects = {
       min: 0,
       max: 100,
     },
-    start: 0,
+    start: 100,
     step: 1,
+    connect: 'lower',
     measure: '',
   },
   chrome: {
@@ -22,7 +23,7 @@ const typesOfEffects = {
       min: 0,
       max: 1,
     },
-    start: 0,
+    start: 1,
     step: 0.1,
     measure: '',
   },
@@ -31,7 +32,7 @@ const typesOfEffects = {
       min: 0,
       max: 1,
     },
-    start: 0,
+    start: 1,
     step: 0.1,
     measure: '',
   },
@@ -40,7 +41,7 @@ const typesOfEffects = {
       min: 0,
       max: 100,
     },
-    start: 0,
+    start: 100,
     step: 1,
     measure: '%',
   },
@@ -49,7 +50,7 @@ const typesOfEffects = {
       min: 0,
       max: 3,
     },
-    start: 0,
+    start: 3,
     step: 0.1,
     measure: 'px',
   },
@@ -58,15 +59,16 @@ const typesOfEffects = {
       min: 1,
       max: 3,
     },
-    start: 1,
+    start: 3,
     step: 0.1,
+    measure: '',
   },
 };
 const sortUpdate = {
   chrome: 'grayscale',
   sepia: 'sepia',
-  marvin: 'invert',//%
-  phobos: 'blur',//px
+  marvin: 'invert',
+  phobos: 'blur',
   heat: 'brightness',
 };
 let type = '';
@@ -74,7 +76,6 @@ let type = '';
 const getTypeOfEffect = (value) => typesOfEffects[value];
 
 const updatingSlider = () => {
-
   effectLevelValue.value = Number(sliderElement.noUiSlider.get());
   if(type === 'marvin'){
     editPicture[0].style.filter = `${sortUpdate[type]}(${sliderElement.noUiSlider.get()}%)`;
@@ -94,9 +95,8 @@ const changeEffects = (evt) => {
   if (evt.target.checked && evt.target.value !== 'none'){
     effectLevel.classList.remove('visually-hidden');
     sliderElement.noUiSlider.updateOptions(getTypeOfEffect(evt.target.value));
-
-    editPicture[0].style.filter = `${sortUpdate[evt.target.value]}(${sliderElement.noUiSlider.options.range.min})`;
-    effectLevelValue.value = sliderElement.noUiSlider.options.range.min;
+    editPicture[0].style.filter = `${sortUpdate[evt.target.value]}(${sliderElement.noUiSlider.options.start}${typesOfEffects.measure})`;
+    effectLevelValue.value = sliderElement.noUiSlider.options.start;
   }
 };
 
