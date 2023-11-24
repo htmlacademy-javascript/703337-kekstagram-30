@@ -1,5 +1,5 @@
-const form = document.querySelector('.img-upload__form');             //форма
-const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;               //регулярное выражение
+const form = document.querySelector('.img-upload__form');
+const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
 const uploadText = document.querySelector('.img-upload__text');
 const hashtagField = uploadText.querySelector('.text__hashtags');
 const commentField = uploadText.querySelector('.text__description');
@@ -8,16 +8,12 @@ const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error',
-});
+}, false);
 
 function arrayHashtags(value) {
-  const arrHashtags = value.split(' ');
-  for(let i = 0; i < arrHashtags.length; i++){
-    if(!arrHashtags[i]){
-      arrHashtags.splice(i, 1);
-    }
-  }
-  return arrHashtags;
+  const arrHashtags = value.trim().split(' ');
+  const newArray = arrHashtags.filter((x) => x !== '' && x !== undefined && x !== null);
+  return newArray;
 }
 
 function validateHashtagsAmount(value){
@@ -56,7 +52,7 @@ function formValidate (){
     if(!pristine.validate(hashtagField)){
       hashtagField.closest('.img-upload__field-wrapper').classList.add('img-upload__field-wrapper--error');
     }
-    if(!pristine.validate.commentField){
+    if(!pristine.validate(commentField)){
       commentField.closest('.img-upload__field-wrapper').classList.add('img-upload__field-wrapper--error');
     }
     if (pristine.validate()){

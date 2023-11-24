@@ -23,14 +23,13 @@ function showBigPicture(evt, arrayPictures){
   pictureDescription.textContent = evt.target.alt;
   const currentPicture = arrayPictures.find(({id}) => id === Number(evt.target.dataset.id));
   if (currentPicture !== undefined){
-    arrayPictures.find(({id}) => id === Number(evt.target.dataset.id)).
-      comments.forEach(({avatar, message, name}) => {
-        const commentElement = commentEl.cloneNode(true);
-        commentElement.querySelector('.social__picture').src = avatar;
-        commentElement.querySelector('.social__picture').alt = name;
-        commentElement.querySelector('.social__text').textContent = message;
-        commentsFragment.appendChild(commentElement);
-      });
+    currentPicture.comments.forEach(({avatar, message, name}) => {
+      const commentElement = commentEl.cloneNode(true);
+      commentElement.querySelector('.social__picture').src = avatar;
+      commentElement.querySelector('.social__picture').alt = name;
+      commentElement.querySelector('.social__text').textContent = message;
+      commentsFragment.appendChild(commentElement);
+    });
   }
 
   commentsList.replaceChildren(commentsFragment);
