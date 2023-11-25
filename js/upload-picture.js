@@ -1,8 +1,6 @@
 import {isEscapeKey} from './util.js';
-import {formValidate} from './hashtag-commit-valid.js';
 import {changeScalePhoto, changeButtonBiggerDisabled} from './change-scale-picture.js';
 import {initEffects, resettingSlider} from'./slider-edit-photo.js';
-import './slider-edit-photo.js';
 
 const body = document.querySelector('body');
 const imgUpload = document.querySelector('.img-upload');
@@ -24,6 +22,7 @@ const onDocumentKeydown = (evt) => {
     closePictureOverlay();
   }
 };
+
 const onHashtagKeydown = (evt) => {
   if(document.activeElement === hashtagField){
     evt.stopPropagation();
@@ -35,7 +34,7 @@ const onCommentKeydown = (evt) => {
   }
 };
 
-uploadPhoto.addEventListener('change', ()=>{
+uploadPhoto.addEventListener('change', () => {
   openPictureOverlay();
 });
 
@@ -45,8 +44,8 @@ function openPictureOverlay (){
   changeButtonBiggerDisabled();
   changeScalePhoto();
   initEffects();
-  //createSlider();
-  formValidate();
+  //setUserFormSubmit();
+  //formValidate();
   closeButtonPictureOverlay.addEventListener('click', closePictureOverlay);
   hashtagField.addEventListener('keydown', onHashtagKeydown);
   commentField.addEventListener('keydown', onCommentKeydown);
@@ -54,6 +53,10 @@ function openPictureOverlay (){
 }
 
 function closePictureOverlay () {
+  const isErrorMessageExist = Boolean(document.querySelector('.error'));
+  if(isErrorMessageExist){
+    return;
+  }
   pictureOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   uploadPhoto.value = '';
@@ -71,3 +74,4 @@ function closePictureOverlay () {
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
+export {closePictureOverlay};

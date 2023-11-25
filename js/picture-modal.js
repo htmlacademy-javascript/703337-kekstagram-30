@@ -1,10 +1,11 @@
 import {isEscapeKey} from './util.js';
-import{showBigPicture} from './full-picture.js';
+import{showBigPicture, loadNextComments} from './full-picture.js';
 
 const body = document.querySelector('body');
 const picturesList = document.querySelector('.pictures');
 const bigPicture = document.querySelector('.big-picture');
 const userModalClosePicture = bigPicture.querySelector('.big-picture__cancel');
+const buttonLoadComments = bigPicture.querySelector('.social__comments-loader');
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -16,10 +17,11 @@ const onDocumentKeydown = (evt) => {
 function openPictureModal () {
   return function(evt, arrayPictures){
     bigPicture.classList.remove('hidden');
-    bigPicture.querySelector('.social__comment-count').classList.add('hidden');
-    bigPicture.querySelector('.comments-loader').classList.add('hidden');
+    bigPicture.querySelector('.social__comment-count').classList.remove('hidden');
+    bigPicture.querySelector('.comments-loader').classList.remove('hidden');
     body.classList.add('modal-open');
     showBigPicture(evt, arrayPictures);
+    buttonLoadComments.addEventListener('click', loadNextComments);
     userModalClosePicture.addEventListener('click', closePictureModal);
     document.addEventListener('keydown', onDocumentKeydown);
   };
