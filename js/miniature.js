@@ -1,4 +1,5 @@
 const picturesList = document.querySelector('.pictures');
+
 const pictureTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
@@ -14,6 +15,7 @@ function generatePictures(arr){
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
     miniaturesFragment.appendChild(pictureElement);
   });
+
   picturesList.appendChild(miniaturesFragment);
 }
 

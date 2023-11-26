@@ -7,7 +7,7 @@ POST: 'POST',
 
 const Route = {
 GET_DATA: '/data',
-SEND_DATA: '/404',
+SEND_DATA: '/',
 };
 
 const load = (route, method = Method.GET, body = null) =>

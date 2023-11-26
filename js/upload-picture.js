@@ -1,13 +1,14 @@
 import {isEscapeKey} from './util.js';
 import {changeScalePhoto, changeButtonBiggerDisabled} from './change-scale-picture.js';
 import {initEffects, resettingSlider} from'./slider-edit-photo.js';
-
+import {uploadPicturePreview} from './avatar.js';
 const body = document.querySelector('body');
 const imgUpload = document.querySelector('.img-upload');
 const uploadPhoto = imgUpload.querySelector('.img-upload__input');
 const pictureOverlay = imgUpload.querySelector('.img-upload__overlay');
 const closeButtonPictureOverlay = pictureOverlay.querySelector('.img-upload__cancel');
 const form = document.querySelector('.img-upload__form');
+const scaleValue = form.querySelector('.scale__control--value');
 const scaleSmaller = form.querySelector('.scale__control--smaller');
 const scaleBigger = form.querySelector('.scale__control--bigger');
 
@@ -35,6 +36,7 @@ const onCommentKeydown = (evt) => {
 };
 
 uploadPhoto.addEventListener('change', () => {
+  uploadPicturePreview();
   openPictureOverlay();
 });
 
@@ -44,8 +46,6 @@ function openPictureOverlay (){
   changeButtonBiggerDisabled();
   changeScalePhoto();
   initEffects();
-  //setUserFormSubmit();
-  //formValidate();
   closeButtonPictureOverlay.addEventListener('click', closePictureOverlay);
   hashtagField.addEventListener('keydown', onHashtagKeydown);
   commentField.addEventListener('keydown', onCommentKeydown);
@@ -65,6 +65,8 @@ function closePictureOverlay () {
   editPicture[0].style.transform = 'scale(1)';
   scaleSmaller.disabled = false;
   scaleBigger.disabled = false;
+  scaleValue.value = '100%';
+  editPicture[0].style.transform = 'scale(1)';
   hashtagField.closest('.img-upload__field-wrapper').classList.remove('img-upload__field-wrapper--error');
   commentField.closest('.img-upload__field-wrapper').classList.remove('img-upload__field-wrapper--error');
   resettingSlider();

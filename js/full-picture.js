@@ -11,7 +11,7 @@ const pictureDescription = bigPicture.querySelector('.social__caption');
 const buttonLoadComments = bigPicture.querySelector('.social__comments-loader');
 let arrayOfComments = [];
 
-function getArrayNextComments (arr) {
+const getArrayNextComments = (arr) => {
   const arrayComments = [...arr];
   //console.log('массив комментариев', arrayComments);
   const index = 0;
@@ -27,9 +27,9 @@ function getArrayNextComments (arr) {
     //console.log('result', nextComments)
     return nextComments;
   };
-}
+};
 
-function renderComments (arr){
+const renderComments = (arr) => {
   const commentsFragment = document.createDocumentFragment();
   arr.forEach(({avatar, message, name}) => {
     const commentElement = commentEl.cloneNode(true);
@@ -41,9 +41,9 @@ function renderComments (arr){
   if (commentsFragment.childElementCount < COMMENT_COUNT){
     buttonLoadComments.classList.add('hidden');
   }
-  //console.log(commentsFragment.childElementCount);
+
   return commentsFragment;
-}
+};
 
 const loadNextComments = () => {
   const getNextComments = getArrayNextComments(arrayOfComments);
@@ -51,23 +51,43 @@ const loadNextComments = () => {
   pictureCommentsShown.textContent = commentsList.children.length;
 };
 
-function showBigPicture(evt, arrayPictures){
-  pictureUrl.src = evt.target.getAttribute('src');
+const showBigPicture = (evt, arrayPictures) => {
+  let currentPicture;
+  let commentsArray;
+  let getNextComments;
+  if(evt.target.closest('.picture__info')){
+    const idPicture = evt.target.closest('.picture__info').closest('.picture').firstElementChild.dataset.id;
+    const imgPicture = evt.target.closest('.picture__info').closest('.picture').firstElementChild;
+    //console.log(idPicture)
+    currentPicture = arrayPictures.find(({id}) => id === Number(idPicture));
+    arrayOfComments = [...currentPicture.comments];
+    commentsArray = [...currentPicture.comments];
+    getNextComments = getArrayNextComments(commentsArray);
+    pictureUrl.src = imgPicture.getAttribute('src');
+    pictureLikes.textContent = evt.target.closest('.picture__info').closest('.picture')
+      .querySelector('.picture__likes').textContent;
+    pictureCommentsAll.textContent = evt.target.closest('.picture__info').closest('.picture')
+      .querySelector('.picture__comments').textContent;
+    pictureDescription.textContent = evt.target.closest('.picture__info').closest('.picture').firstElementChild.alt;
+  } else {
+    pictureUrl.src = evt.target.getAttribute('src');
   pictureLikes.textContent = evt.target.closest('.picture')
     .querySelector('.picture__likes').textContent;
 
   pictureCommentsAll.textContent = evt.target.closest('.picture')
     .querySelector('.picture__comments').textContent;
   pictureDescription.textContent = evt.target.alt;
-  const currentPicture = arrayPictures.find(({id}) => id === Number(evt.target.dataset.id));
+  currentPicture = arrayPictures.find(({id}) => id === Number(evt.target.dataset.id));
   arrayOfComments = [...currentPicture.comments];
-  const commentsArray = [...currentPicture.comments];
-  const getNextComments = getArrayNextComments(commentsArray);
+  commentsArray = [...currentPicture.comments];
+  getNextComments = getArrayNextComments(commentsArray);
+  }
+
   if (currentPicture !== undefined){
     commentsList.innerHTML = '';
     commentsList.appendChild(renderComments(getNextComments()));
     pictureCommentsShown.textContent = commentsList.children.length;
   }
-}
+};
 
 export {showBigPicture, loadNextComments};

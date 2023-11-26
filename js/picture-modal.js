@@ -36,7 +36,7 @@ function closePictureModal () {
 function openBigPicture(arrMiniatures){
   const openPicture = openPictureModal();
   picturesList.addEventListener('click', (evt)=>{
-    if(evt.target.closest('.picture')){
+    if(evt.target.closest('.picture') || evt.target.closest('.picture__info')){
       openPicture(evt, arrMiniatures);
     }
   });

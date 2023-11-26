@@ -1,4 +1,4 @@
-import { sendData } from './load.js';
+import { sendData } from './api.js';
 const form = document.querySelector('.img-upload__form');
 const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
 const uploadText = document.querySelector('.img-upload__text');
