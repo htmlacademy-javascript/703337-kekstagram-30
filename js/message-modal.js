@@ -24,7 +24,7 @@ function onBodyClick (evt) {
 }
 
 function hideMessage (){
-  const existElement = document.querySelector('.succsess') || document.querySelector('.error');
+  const existElement = document.querySelector('.success') || document.querySelector('.error');
   existElement.remove();
   document.removeEventListener('keydown', onDucumentKeydown);
   bodyElement.removeEventListener('click', onBodyClick);
@@ -41,7 +41,7 @@ const showMessage = (element, button) => {
   document.addEventListener('keydown', onDucumentKeydown);
 };
 
-const showPostSuccsessMessage = () => {
+const showPostSuccessMessage = () => {
   showMessage(succsessPostElement, buttonCloseSuccsessMessage);
 };
 const showPostErrorMessage = () => {
@@ -55,4 +55,4 @@ const showErrorLoadMessage = () => {
     errorLoadElement.remove();
   }, TIMEOUT);
 };
-export {showPostSuccsessMessage, showPostErrorMessage, showErrorLoadMessage};
+export {showPostSuccessMessage, showPostErrorMessage, showErrorLoadMessage};
