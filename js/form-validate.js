@@ -1,8 +1,10 @@
+import { sendData } from './load.js';
 const form = document.querySelector('.img-upload__form');
 const hashtag = /^#[a-zа-яё0-9]{1,19}$/i;
 const uploadText = document.querySelector('.img-upload__text');
 const hashtagField = uploadText.querySelector('.text__hashtags');
 const commentField = uploadText.querySelector('.text__description');
+const submitButton = form.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -10,32 +12,36 @@ const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__field-wrapper--error',
 }, false);
 
-function arrayHashtags(value) {
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
+
+const arrayHashtags = (value) => {
   const arrHashtags = value.trim().split(' ');
   const newArray = arrHashtags.filter((x) => x !== '' && x !== undefined && x !== null);
   return newArray;
-}
+};
 
-function validateHashtagsAmount(value){
+const validateHashtagsAmount = (value) => {
   const arr = arrayHashtags(value);
   return arr.length <= 2;
-}
+};
 
-function validateHashtagsContent(value){
+const validateHashtagsContent = (value) => {
   const arr = arrayHashtags(value);
   const content = arr.every((element) => hashtag.test(element));
   return content;
-}
+};
 
-function validateHashtagsEqual(value){
+const validateHashtagsEqual = (value) => {
   const arr = arrayHashtags(value);
   const arrEqual = arr.filter((el, index, array) => array.indexOf(el) !== index);
   return arrEqual.length === 0;
-}
+};
 
-function validateComment(value){
-  return value.length >= 0 && value.length <= 140;
-}
+const validateComment = (value) =>
+  value.length >= 0 && value.length <= 140;
 
 pristine.addValidator(form.querySelector('.text__hashtags'), validateHashtagsContent,
   'хэш-тег начинается с символа #, хеш-тег не может состоять только из одной решётки, максимальная длина одного хэш-тега 20 символов, включая решётку, строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.!');
@@ -62,5 +68,38 @@ function formValidate (){
     }
   });
 }
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
 
-export{formValidate};
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+const setUserFormSubmit = (onSuccess, showSucModal, showErrModal) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then((response) => {
+          if (response.ok) {
+            onSuccess();
+            showSucModal();
+          } else{
+            showErrModal();
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        })
+        .finally(unblockSubmitButton);
+    }
+  });
+};
+
+export{formValidate, setUserFormSubmit};
+
