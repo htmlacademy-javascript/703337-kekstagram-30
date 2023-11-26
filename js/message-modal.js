@@ -55,4 +55,4 @@ const showErrorLoadMessage = () => {
     errorLoadElement.remove();
   }, TIMEOUT);
 };
-export {showPostSuccsessMessage, showPostErrorMessage, showErrorLoadMessage};
+export {showPostSuccessMessage, showPostErrorMessage, showErrorLoadMessage};
