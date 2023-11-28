@@ -6,7 +6,7 @@ import { setUserFormSubmit } from './form-validate.js';
 import { closePictureOverlay } from './upload-picture.js';
 import { showErrorLoadMessage, showPostSuccessMessage, showPostErrorMessage} from './message-modal';
 import {getData} from './api.js';
-import { showFilters, filteredRandom, setDefaultClick, setRandomClick, setDiscussedClick, filteredDiscussed } from './filter.js';
+import { showFilters, filteredRandom, setDefaultClick, setRandomClick, setDiscussedClick, filteredDiscussed, clearPicturesList } from './filter.js';
 const RERENDER_DELAY = 500;
 
 getData()
@@ -19,23 +19,25 @@ getData()
   })
   .then((response) => response.json())
   .then((data) => {
-    //console.log(data);
     generatePictures(data);
     showFilters();
 
-    setDefaultClick(debounce(() =>
-      generatePictures(data)
+    setDefaultClick(debounce(() =>{
+      clearPicturesList();
+      generatePictures(data);
+    }
     , RERENDER_DELAY,));
 
     setRandomClick(debounce(() => {
+      clearPicturesList();
       const getRandomElements = filteredRandom(data);
       const arrayRandomElements = getRandomElements();
-      //console.log(arrayRandomElements);
       generatePictures(arrayRandomElements);
     }, RERENDER_DELAY,));
 
     setDiscussedClick(debounce(() => {
       const arrayDiscussedElement = filteredDiscussed(data);
+      clearPicturesList();
       generatePictures(arrayDiscussedElement);
     }, RERENDER_DELAY,));
 

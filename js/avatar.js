@@ -1,9 +1,9 @@
 const fileChooser = document.querySelector('.img-upload__input');
 const preview = document.querySelector('.img-upload__preview');
-const effectsList = document.querySelector('.effects__list')
+const effectsList = document.querySelector('.effects__list');
 const effectsElements = effectsList.children;
 
-const FILE_TYPES = ['.jpg', '.jpeg'];
+const FILE_TYPES = ['.jpg', '.jpeg', '.png'];
 
 const uploadPicturePreview = () => {
   const file = fileChooser.files[0];
@@ -11,12 +11,11 @@ const uploadPicturePreview = () => {
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
   if (matches) {
     preview.children[0].src = URL.createObjectURL(file);
-
     for(const element of effectsElements) {
       element.getElementsByTagName('span')[0].style.backgroundImage = `url('${preview.children[0].src}')`;
-
     }
-
+  } else {
+    alert('Допустимы следующие форматы фотографий - .png, .jpg, .jpeg!');
   }
 };
 

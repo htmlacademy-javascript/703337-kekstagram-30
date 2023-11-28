@@ -18,8 +18,10 @@ function changeButtonSmallerDisabled (){
   }
 }
 function changeButtonBiggerDisabled(){
+  scaleSmaller.disabled = false;
   if(scaleValue.value === '100%'){
     scaleBigger.disabled = true;
+
   } else{
     scaleBigger.disabled = false;
   }

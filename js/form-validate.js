@@ -5,6 +5,7 @@ const uploadText = document.querySelector('.img-upload__text');
 const hashtagField = uploadText.querySelector('.text__hashtags');
 const commentField = uploadText.querySelector('.text__description');
 const submitButton = form.querySelector('.img-upload__submit');
+const HASHTAGS_COUNT = 5;
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -19,13 +20,16 @@ const SubmitButtonText = {
 
 const arrayHashtags = (value) => {
   const arrHashtags = value.trim().split(' ');
+  for(let i = 0; i < arrHashtags.length; i++){
+    arrHashtags[i] = arrHashtags[i].toLowerCase();
+  }
   const newArray = arrHashtags.filter((x) => x !== '' && x !== undefined && x !== null);
   return newArray;
 };
 
 const validateHashtagsAmount = (value) => {
   const arr = arrayHashtags(value);
-  return arr.length <= 2;
+  return arr.length <= HASHTAGS_COUNT;
 };
 
 const validateHashtagsContent = (value) => {
@@ -37,6 +41,7 @@ const validateHashtagsContent = (value) => {
 const validateHashtagsEqual = (value) => {
   const arr = arrayHashtags(value);
   const arrEqual = arr.filter((el, index, array) => array.indexOf(el) !== index);
+
   return arrEqual.length === 0;
 };
 
@@ -48,7 +53,7 @@ pristine.addValidator(form.querySelector('.text__hashtags'), validateHashtagsCon
 pristine.addValidator(form.querySelector('.text__hashtags'), validateHashtagsEqual,
   'Есть одинаковые хештеги!');
 pristine.addValidator(form.querySelector('.text__hashtags'), validateHashtagsAmount,
-  'нельзя указать больше двух хэш-тегов');
+  'нельзя указать больше пяти хэш-тегов');
 pristine.addValidator(commentField, validateComment,
   'Длина комментария не может составлять больше 140 символов!');
 

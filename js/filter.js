@@ -46,45 +46,44 @@ const clearPicturesList = () => {
   }
 };
 const filteredDiscussed = (arr) => {
-
   const arrayOfObjects = arr.map((item) => structuredClone(item));
   arrayOfObjects.sort((a, b) => b.comments.length - a.comments.length);
   return arrayOfObjects;
 
 };
-const toggleButtons = (button) => {
+const toggleButtons = () => {//button
   for(const but of buttonsList){
-    if(but.classList.contains('img-filters__button--active') && but !== button){
-      but.classList.remove('img-filters__button--active');
-    }
+    //if(but.classList.contains('img-filters__button--active') && but !== button){
+    but.classList.remove('img-filters__button--active');
+    //}
   }
 };
 
 const setDefaultClick = (cb) => {
   buttonFilterDefault.addEventListener('click', () => {
+    toggleButtons();//buttonFilterDefault
     buttonFilterDefault.classList.add('img-filters__button--active');
-    toggleButtons(buttonFilterDefault);
-    clearPicturesList();
+    //clearPicturesList();
     cb();
   });
 };
 
 const setRandomClick = (cb1) => {
   buttonFilterRandom.addEventListener('click', () => {
+    toggleButtons();//buttonFilterRandom
     buttonFilterRandom.classList.add('img-filters__button--active');
-    toggleButtons(buttonFilterRandom);
-    clearPicturesList();
+    //clearPicturesList();
     cb1();
   });
 };
 
 const setDiscussedClick = (cb2) => {
   buttonFilterDiscussed.addEventListener('click', () => {
+    toggleButtons();//buttonFilterDiscussed
     buttonFilterDiscussed.classList.add('img-filters__button--active');
-    toggleButtons(buttonFilterDiscussed);
-    clearPicturesList();
+    //clearPicturesList();
     cb2();
   });
 };
 
-export {showFilters, filteredRandom, filteredDiscussed,filteredDefault, setDefaultClick, setRandomClick, setDiscussedClick};
+export {showFilters, filteredRandom, filteredDiscussed,filteredDefault, setDefaultClick, setRandomClick, setDiscussedClick, clearPicturesList};

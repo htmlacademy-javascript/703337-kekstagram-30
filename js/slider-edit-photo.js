@@ -1,3 +1,4 @@
+import { changeButtonBiggerDisabled } from './change-scale-picture';
 const form = document.querySelector('.img-upload__form');
 const imgUploadPreview = form.querySelector('.img-upload__preview');
 const editPicture = imgUploadPreview.getElementsByTagName('img');
@@ -6,7 +7,8 @@ const listItems = effectsList.children;
 const effectLevel = form.querySelector('.img-upload__effect-level');
 const sliderElement = effectLevel.querySelector('.effect-level__slider');
 const effectLevelValue = form.querySelector('.effect-level__value');
-
+const scaleValue = form.querySelector('.scale__control--value');
+const initialScaleValue = '100%';
 const typesOfEffects = {
   none: {
     range: {
@@ -77,6 +79,7 @@ const getTypeOfEffect = (value) => typesOfEffects[value];
 
 const updatingSlider = () => {
   effectLevelValue.value = Number(sliderElement.noUiSlider.get());
+  console.log(effectLevelValue.value)
   if(type === 'marvin'){
     editPicture[0].style.filter = `${sortUpdate[type]}(${sliderElement.noUiSlider.get()}%)`;
   } else if(type === 'phobos'){
@@ -90,13 +93,17 @@ const changeEffects = (evt) => {
   type = evt.target.value;
   effectLevel.classList.add('visually-hidden');
   sliderElement.noUiSlider.updateOptions(getTypeOfEffect(evt.target.value));
-  effectLevelValue.value = sliderElement.noUiSlider.options.start;
+  scaleValue.value = initialScaleValue;
+  editPicture[0].style.transform = 'scale(1)';
+  changeButtonBiggerDisabled();
   editPicture[0].style.filter = 'none';
   if (evt.target.checked && evt.target.value !== 'none'){
     effectLevel.classList.remove('visually-hidden');
     sliderElement.noUiSlider.updateOptions(getTypeOfEffect(evt.target.value));
+    console.log(sliderElement.noUiSlider.options.start)
     editPicture[0].style.filter = `${sortUpdate[evt.target.value]}(${sliderElement.noUiSlider.options.start}${typesOfEffects.measure})`;
-    effectLevelValue.value = sliderElement.noUiSlider.options.start;
+    //effectLevelValue.value = sliderElement.noUiSlider.options.start;
+    console.log(effectLevelValue.value)
   }
 };
 
@@ -107,10 +114,11 @@ const initEffects = () => {
   editPicture[0].style.filter = '';
   effectLevelValue.value = '';
 
+  sliderElement.noUiSlider.on('update', updatingSlider);
+
   for(const item of listItems){
     item.querySelector('input').addEventListener('change', changeEffects);
   }
-  sliderElement.noUiSlider.on('update', updatingSlider);
 };
 
 const resettingSlider = () => {
