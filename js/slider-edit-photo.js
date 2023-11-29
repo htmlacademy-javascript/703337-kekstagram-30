@@ -96,7 +96,7 @@ const changeEffects = (evt) => {
   console.log(scaleValue.value );
   //scaleValue.value = initialScaleValue;
   //editPicture[0].style.transform = 'scale(1)';
-  changeButtonBiggerDisabled();
+  //changeButtonBiggerDisabled();
   editPicture[0].style.filter = 'none';
   if (evt.target.checked && evt.target.value !== 'none'){
     effectLevel.classList.remove('visually-hidden');

@@ -42,7 +42,7 @@ uploadPhoto.addEventListener('change', () => {
 function openPictureOverlay (){
   pictureOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  changeButtonBiggerDisabled();
+  //changeButtonBiggerDisabled();
   changeScalePhoto();
   initEffects();
   formValidate();

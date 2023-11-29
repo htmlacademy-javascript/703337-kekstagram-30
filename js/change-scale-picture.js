@@ -12,33 +12,41 @@ const STEP = 25;
 
 function changeButtonSmallerDisabled (){
   if(scaleValue.value === '25%'){
-    scaleSmaller.disabled = true;
+    makePictureBigger();
+    //scaleSmaller.disabled = true;
   } else{
     scaleSmaller.disabled = false;
   }
 }
 function changeButtonBiggerDisabled(){
-  scaleSmaller.disabled = false;
-  if(scaleValue.value === '100%'){
-    scaleBigger.disabled = true;
 
+  if(scaleValue.value === '100%'){
+    //makePictureSmaller();
+    scaleBigger.disabled = true;
   } else{
     scaleBigger.disabled = false;
   }
 }
 function makePictureSmaller (){
+  if(scaleValue.value === '25%'){
+    return;
+  }
+  //scaleBigger.disabled = false;
   scaleValue.value = `${parseInt(scaleValue.value, 10) - STEP}%`;
   console.log(scaleValue.value);
-  scaleBigger.disabled = false;
   editPicture[0].style.transform = `scale(${parseInt(scaleValue.value, 10) / 100})`;
-  changeButtonSmallerDisabled();
+  //changeButtonSmallerDisabled();
 }
 
 function makePictureBigger (){
+
+  if(scaleValue.value === '100%'){
+    return;
+  }
+  //scaleSmaller.disabled = false;
   scaleValue.value = `${parseInt(scaleValue.value, 10) + STEP}%`;
-  scaleSmaller.disabled = false;
   editPicture[0].style.transform = `scale(${parseInt(scaleValue.value, 10) / 100})`;
-  changeButtonBiggerDisabled();
+  //changeButtonBiggerDisabled();
 }
 
 function changeScalePhoto (){
