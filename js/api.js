@@ -1,13 +1,13 @@
 const BASE_URL = 'https://30.javascript.pages.academy/kekstagram';
 
 const Method = {
-GET: 'GET',
-POST: 'POST',
+  GET: 'GET',
+  POST: 'POST',
 };
 
 const Route = {
-GET_DATA: '/data',
-SEND_DATA: '/',
+  GET_DATA: '/data',
+  SEND_DATA: '/',
 };
 
 const load = (route, method = Method.GET, body = null) =>

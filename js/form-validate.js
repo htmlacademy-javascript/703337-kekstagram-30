@@ -14,8 +14,9 @@ const editPicture = imgUploadPreview.getElementsByTagName('img');
 const scaleValue = form.querySelector('.scale__control--value');
 const scaleSmaller = form.querySelector('.scale__control--smaller');
 const scaleBigger = form.querySelector('.scale__control--bigger');
-
+const DESCRIPTION_LENGTH = 140;
 const HASHTAGS_COUNT = 5;
+const initialValueScale = '100%';
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -28,7 +29,7 @@ const SubmitButtonText = {
   SENDING: 'Публикую...'
 };
 
-const arrayHashtags = (value) => {
+const arrayHashtag = (value) => {
   const arrHashtags = value.trim().split(' ');
   for(let i = 0; i < arrHashtags.length; i++){
     arrHashtags[i] = arrHashtags[i].toLowerCase();
@@ -38,25 +39,24 @@ const arrayHashtags = (value) => {
 };
 
 const validateHashtagsAmount = (value) => {
-  const arr = arrayHashtags(value);
+  const arr = arrayHashtag(value);
   return arr.length <= HASHTAGS_COUNT;
 };
 
 const validateHashtagsContent = (value) => {
-  const arr = arrayHashtags(value);
+  const arr = arrayHashtag(value);
   const content = arr.every((element) => hashtag.test(element));
   return content;
 };
 
 const validateHashtagsEqual = (value) => {
-  const arr = arrayHashtags(value);
+  const arr = arrayHashtag(value);
   const arrEqual = arr.filter((el, index, array) => array.indexOf(el) !== index);
-
   return arrEqual.length === 0;
 };
 
 const validateComment = (value) =>
-  value.length >= 0 && value.length <= 140;
+  value.length >= 0 && value.length <= DESCRIPTION_LENGTH;
 
 pristine.addValidator(form.querySelector('.text__hashtags'), validateHashtagsContent,
   'хэш-тег начинается с символа #, хеш-тег не может состоять только из одной решётки, максимальная длина одного хэш-тега 20 символов, включая решётку, строка после решётки должна состоять из букв и чисел и не может содержать пробелы, спецсимволы (#, @, $ и т. п.), символы пунктуации (тире, дефис, запятая и т. п.), эмодзи и т. д.!');
@@ -79,10 +79,10 @@ function formValidate (){
     if (pristine.validate()){
       hashtagField.closest('.img-upload__field-wrapper').classList.remove('img-upload__field-wrapper--error');
       commentField.closest('.img-upload__field-wrapper').classList.remove('img-upload__field-wrapper--error');
-      //form.submit();
     }
   });
 }
+
 const resetForm = () => {
   pictureOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -92,7 +92,7 @@ const resetForm = () => {
   editPicture[0].style.transform = 'scale(1)';
   scaleSmaller.disabled = false;
   scaleBigger.disabled = false;
-  scaleValue.value = '100%';
+  scaleValue.value = initialValueScale;
   hashtagField.closest('.img-upload__field-wrapper').classList.remove('img-upload__field-wrapper--error');
   commentField.closest('.img-upload__field-wrapper').classList.remove('img-upload__field-wrapper--error');
   pristine.reset();

@@ -1,5 +1,5 @@
 import {isEscapeKey} from './util.js';
-import{showBigPicture, loadNextComments} from './full-picture.js';
+import{showBigPicture, onLoadNextComments} from './full-picture.js';
 
 const body = document.querySelector('body');
 const picturesList = document.querySelector('.pictures');
@@ -21,7 +21,7 @@ function openPictureModal () {
     bigPicture.querySelector('.comments-loader').classList.remove('hidden');
     body.classList.add('modal-open');
     showBigPicture(evt, arrayPictures);
-    buttonLoadComments.addEventListener('click', loadNextComments);
+    buttonLoadComments.addEventListener('click', onLoadNextComments);
     userModalClosePicture.addEventListener('click', closePictureModal);
     document.addEventListener('keydown', onDocumentKeydown);
   };

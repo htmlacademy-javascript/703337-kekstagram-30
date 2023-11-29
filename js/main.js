@@ -3,10 +3,10 @@ import {openBigPicture} from './picture-modal.js';
 import './upload-picture.js';
 import { debounce } from './util.js';
 import { setUserFormSubmit } from './form-validate.js';
-import { closePictureOverlay } from './upload-picture.js';
+import { onClosePictureOverlay } from './upload-picture.js';
 import { showErrorLoadMessage, showPostSuccessMessage, showPostErrorMessage} from './message-modal';
 import {getData} from './api.js';
-import { showFilters, filteredRandom, setDefaultClick, setRandomClick, setDiscussedClick, filteredDiscussed, clearPicturesList } from './filter.js';
+import { showFilters, filterRandom, setDefaultClick, setRandomClick, setDiscussedClick, filterDiscussed, clearPicturesList } from './filter.js';
 const RERENDER_DELAY = 500;
 
 getData()
@@ -30,14 +30,14 @@ getData()
 
     setRandomClick(debounce(() => {
       clearPicturesList();
-      const getRandomElements = filteredRandom(data);
+      const getRandomElements = filterRandom(data);
       const arrayRandomElements = getRandomElements();
       generatePictures(arrayRandomElements);
     }, RERENDER_DELAY,));
 
     setDiscussedClick(debounce(() => {
-      const arrayDiscussedElement = filteredDiscussed(data);
       clearPicturesList();
+      const arrayDiscussedElement = filterDiscussed(data);
       generatePictures(arrayDiscussedElement);
     }, RERENDER_DELAY,));
 
@@ -48,5 +48,5 @@ getData()
     console.error(e);
   });
 
-setUserFormSubmit(closePictureOverlay, showPostSuccessMessage, showPostErrorMessage);
+setUserFormSubmit(onClosePictureOverlay, showPostSuccessMessage, showPostErrorMessage);
 
