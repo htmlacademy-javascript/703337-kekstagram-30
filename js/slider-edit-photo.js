@@ -8,7 +8,7 @@ const effectLevel = form.querySelector('.img-upload__effect-level');
 const sliderElement = effectLevel.querySelector('.effect-level__slider');
 const effectLevelValue = form.querySelector('.effect-level__value');
 const scaleValue = form.querySelector('.scale__control--value');
-const initialScaleValue = '100%';
+//const initialScaleValue = '100%';
 const typesOfEffects = {
   none: {
     range: {
@@ -93,8 +93,9 @@ const changeEffects = (evt) => {
   type = evt.target.value;
   effectLevel.classList.add('visually-hidden');
   sliderElement.noUiSlider.updateOptions(getTypeOfEffect(evt.target.value));
-  scaleValue.value = initialScaleValue;
-  editPicture[0].style.transform = 'scale(1)';
+  console.log(scaleValue.value );
+  //scaleValue.value = initialScaleValue;
+  //editPicture[0].style.transform = 'scale(1)';
   changeButtonBiggerDisabled();
   editPicture[0].style.filter = 'none';
   if (evt.target.checked && evt.target.value !== 'none'){

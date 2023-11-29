@@ -28,6 +28,7 @@ function changeButtonBiggerDisabled(){
 }
 function makePictureSmaller (){
   scaleValue.value = `${parseInt(scaleValue.value, 10) - STEP}%`;
+  console.log(scaleValue.value);
   scaleBigger.disabled = false;
   editPicture[0].style.transform = `scale(${parseInt(scaleValue.value, 10) / 100})`;
   changeButtonSmallerDisabled();
