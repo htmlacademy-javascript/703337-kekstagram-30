@@ -3,10 +3,10 @@ import {openBigPicture} from './picture-modal.js';
 import './upload-picture.js';
 import { debounce } from './util.js';
 import { setUserFormSubmit } from './form-validate.js';
-import { closePictureOverlay } from './upload-picture.js';
+import { onClosePictureOverlay } from './upload-picture.js';
 import { showErrorLoadMessage, showPostSuccessMessage, showPostErrorMessage} from './message-modal';
 import {getData} from './api.js';
-import { showFilters, filteredRandom, setDefaultClick, setRandomClick, setDiscussedClick, filteredDiscussed } from './filter.js';
+import { showFilters, filterRandom, setDefaultClick, setRandomClick, setDiscussedClick, filterDiscussed, clearPicturesList } from './filter.js';
 const RERENDER_DELAY = 500;
 
 getData()
@@ -19,23 +19,25 @@ getData()
   })
   .then((response) => response.json())
   .then((data) => {
-    //console.log(data);
     generatePictures(data);
     showFilters();
 
-    setDefaultClick(debounce(() =>
-      generatePictures(data)
+    setDefaultClick(debounce(() =>{
+      clearPicturesList();
+      generatePictures(data);
+    }
     , RERENDER_DELAY,));
 
     setRandomClick(debounce(() => {
-      const getRandomElements = filteredRandom(data);
+      clearPicturesList();
+      const getRandomElements = filterRandom(data);
       const arrayRandomElements = getRandomElements();
-      //console.log(arrayRandomElements);
       generatePictures(arrayRandomElements);
     }, RERENDER_DELAY,));
 
     setDiscussedClick(debounce(() => {
-      const arrayDiscussedElement = filteredDiscussed(data);
+      clearPicturesList();
+      const arrayDiscussedElement = filterDiscussed(data);
       generatePictures(arrayDiscussedElement);
     }, RERENDER_DELAY,));
 
@@ -46,5 +48,5 @@ getData()
     console.error(e);
   });
 
-setUserFormSubmit(closePictureOverlay, showPostSuccessMessage, showPostErrorMessage);
+setUserFormSubmit(onClosePictureOverlay, showPostSuccessMessage, showPostErrorMessage);
 

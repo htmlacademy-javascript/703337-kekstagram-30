@@ -1,8 +1,8 @@
 const form = document.querySelector('.img-upload__form');
 const imgUploadPreview = form.querySelector('.img-upload__preview');
 const editPicture = imgUploadPreview.getElementsByTagName('img');
-const effectsList = form.querySelector('.effects__list');
-const listItems = effectsList.children;
+const effectList = form.querySelector('.effects__list');
+const listItem = effectList.children;
 const effectLevel = form.querySelector('.img-upload__effect-level');
 const sliderElement = effectLevel.querySelector('.effect-level__slider');
 const effectLevelValue = form.querySelector('.effect-level__value');
@@ -75,7 +75,7 @@ let type = '';
 
 const getTypeOfEffect = (value) => typesOfEffects[value];
 
-const updatingSlider = () => {
+const onUpdateSlider = () => {
   effectLevelValue.value = Number(sliderElement.noUiSlider.get());
   if(type === 'marvin'){
     editPicture[0].style.filter = `${sortUpdate[type]}(${sliderElement.noUiSlider.get()}%)`;
@@ -86,37 +86,35 @@ const updatingSlider = () => {
   }
 };
 
-const changeEffects = (evt) => {
+const onChangeEffects = (evt) => {
   type = evt.target.value;
   effectLevel.classList.add('visually-hidden');
   sliderElement.noUiSlider.updateOptions(getTypeOfEffect(evt.target.value));
-  effectLevelValue.value = sliderElement.noUiSlider.options.start;
   editPicture[0].style.filter = 'none';
   if (evt.target.checked && evt.target.value !== 'none'){
     effectLevel.classList.remove('visually-hidden');
     sliderElement.noUiSlider.updateOptions(getTypeOfEffect(evt.target.value));
     editPicture[0].style.filter = `${sortUpdate[evt.target.value]}(${sliderElement.noUiSlider.options.start}${typesOfEffects.measure})`;
-    effectLevelValue.value = sliderElement.noUiSlider.options.start;
   }
 };
 
 const initEffects = () => {
   noUiSlider.create(sliderElement, getTypeOfEffect('none'));
-  listItems[0].querySelector('input').checked = true;
+  listItem[0].querySelector('input').checked = true;
   effectLevel.classList.add('visually-hidden');
   editPicture[0].style.filter = '';
   effectLevelValue.value = '';
+  sliderElement.noUiSlider.on('update', onUpdateSlider);
 
-  for(const item of listItems){
-    item.querySelector('input').addEventListener('change', changeEffects);
+  for(const item of listItem){
+    item.querySelector('input').addEventListener('change', onChangeEffects);
   }
-  sliderElement.noUiSlider.on('update', updatingSlider);
 };
 
-const resettingSlider = () => {
-  sliderElement.removeEventListener('update', updatingSlider);
-  for(const item of listItems){
-    item.removeEventListener('change', changeEffects);
+const resetSlider = () => {
+  sliderElement.removeEventListener('update', onUpdateSlider);
+  for(const item of listItem){
+    item.removeEventListener('change', onChangeEffects);
   }
   type = '';
   editPicture[0].style.filter = '';
@@ -124,5 +122,5 @@ const resettingSlider = () => {
   effectLevelValue.value = '';
 };
 
-export{initEffects, resettingSlider};
+export{initEffects, resetSlider};
 
