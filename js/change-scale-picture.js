@@ -11,24 +11,6 @@ const STEP = 25;
 const lowerValueScale = '25%';
 const upperValueScale = '100%';
 
-// function changeButtonSmallerDisabled (){
-//   if(scaleValue.value === '25%'){
-//     makePictureBigger();
-//   } else{
-//     scaleSmaller.disabled = false;
-//   }
-// }
-
-// function changeButtonBiggerDisabled(){
-
-//   if(scaleValue.value === '100%'){
-//     makePictureSmaller();
-//     scaleBigger.disabled = true;
-//   } else{
-//     scaleBigger.disabled = false;
-//   }
-// }
-
 function onPictureSmaller (){
   if(scaleValue.value === lowerValueScale){
     return;
