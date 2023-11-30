@@ -14,8 +14,6 @@ const uploadPicturePreview = () => {
     for(const element of effectsElements) {
       element.getElementsByTagName('span')[0].style.backgroundImage = `url('${preview.children[0].src}')`;
     }
-  } else {
-    alert('Допустимы следующие форматы фотографий - .png, .jpg, .jpeg!');
   }
 };
 
