@@ -96,7 +96,7 @@ const resetForm = () => {
   hashtagField.closest('.img-upload__field-wrapper').classList.remove('img-upload__field-wrapper--error');
   commentField.closest('.img-upload__field-wrapper').classList.remove('img-upload__field-wrapper--error');
   pristine.reset();
-}
+};
 const blockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = SubmitButtonText.SENDING;
@@ -122,8 +122,8 @@ const setUserFormSubmit = (onSuccess, showSucModal, showErrModal) => {
             showErrModal();
           }
         })
-        .catch((e) => {
-          console.error(e);
+        .catch(() => {
+          showErrModal();
         })
         .finally(unblockSubmitButton);
     }

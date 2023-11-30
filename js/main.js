@@ -43,9 +43,8 @@ getData()
 
     openBigPicture(data);
   })
-  .catch((e) => {
+  .catch(() => {
     showErrorLoadMessage();
-    console.error(e);
   });
 
 setUserFormSubmit(onClosePictureOverlay, showPostSuccessMessage, showPostErrorMessage);
